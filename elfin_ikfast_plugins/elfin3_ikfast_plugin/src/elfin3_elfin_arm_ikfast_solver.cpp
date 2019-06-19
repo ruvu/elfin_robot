@@ -12,7 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 ///
-/// ikfast version 0x10000049 generated on 2018-02-11 11:37:36.725713
+/// ikfast version 0x10000049 generated on 2019-06-19 17:29:58.706786
 /// To compile with gcc:
 ///     gcc -lstdc++ ik.cpp
 /// To compile without any main function as a shared object (might need -llapack):
@@ -177,11 +177,11 @@ inline float IKatan2Simple(float fy, float fx) {
     return atan2f(fy,fx);
 }
 inline float IKatan2(float fy, float fx) {
-    if( std::isnan(fy) ) {
-        IKFAST_ASSERT(!std::isnan(fx)); // if both are nan, probably wrong value will be returned
+    if( isnan(fy) ) {
+        IKFAST_ASSERT(!isnan(fx)); // if both are nan, probably wrong value will be returned
         return float(IKPI_2);
     }
-    else if( std::isnan(fx) ) {
+    else if( isnan(fx) ) {
         return 0;
     }
     return atan2f(fy,fx);
@@ -190,11 +190,11 @@ inline double IKatan2Simple(double fy, double fx) {
     return atan2(fy,fx);
 }
 inline double IKatan2(double fy, double fx) {
-    if( std::isnan(fy) ) {
-        IKFAST_ASSERT(!std::isnan(fx)); // if both are nan, probably wrong value will be returned
+    if( isnan(fy) ) {
+        IKFAST_ASSERT(!isnan(fx)); // if both are nan, probably wrong value will be returned
         return IKPI_2;
     }
-    else if( std::isnan(fx) ) {
+    else if( isnan(fx) ) {
         return 0;
     }
     return atan2(fy,fx);
@@ -213,7 +213,7 @@ inline CheckValue<T> IKatan2WithCheck(T fy, T fx, T epsilon)
     CheckValue<T> ret;
     ret.valid = false;
     ret.value = 0;
-    if( !std::isnan(fy) && !std::isnan(fx) ) {
+    if( !isnan(fy) && !isnan(fx) ) {
         if( IKabs(fy) >= IKFAST_ATAN2_MAGTHRESH || IKabs(fx) > IKFAST_ATAN2_MAGTHRESH ) {
             ret.value = IKatan2Simple(fy,fx);
             ret.valid = true;
@@ -298,13 +298,13 @@ inline CheckValue<T> IKPowWithIntegerCheck(T f, int n)
 /// \param pfree is an array specifying the free joints of the chain.
 IKFAST_API void ComputeFk(const IkReal* j, IkReal* eetrans, IkReal* eerot) {
 IkReal x0,x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,x20,x21,x22,x23,x24,x25,x26,x27,x28,x29,x30,x31,x32,x33,x34,x35,x36,x37,x38,x39,x40,x41,x42,x43;
-x0=IKsin(j[0]);
-x1=IKcos(j[1]);
-x2=IKsin(j[2]);
-x3=IKcos(j[2]);
-x4=IKsin(j[1]);
+x0=IKcos(j[0]);
+x1=IKcos(j[2]);
+x2=IKsin(j[1]);
+x3=IKcos(j[1]);
+x4=IKsin(j[2]);
 x5=IKcos(j[3]);
-x6=IKcos(j[0]);
+x6=IKsin(j[0]);
 x7=IKsin(j[3]);
 x8=IKcos(j[5]);
 x9=IKsin(j[5]);
@@ -312,50 +312,50 @@ x10=IKsin(j[4]);
 x11=IKcos(j[4]);
 x12=((1.0)*x11);
 x13=((1.0)*x10);
-x14=((0.1975)*x3);
-x15=((0.324)*x2);
-x16=((1.0)*x3);
-x17=((0.324)*x3);
-x18=(x6*x7);
-x19=(x1*x3);
-x20=(x4*x6);
-x21=(x0*x7);
-x22=(x0*x4);
-x23=(x0*x1);
-x24=(x10*x5);
-x25=(x2*x4);
-x26=((1.0)*x18);
-x27=((1.0)*x21);
-x28=(x16*x4);
-x29=((0.1975)*x1*x2);
-x30=((1.0)*x1*x2);
-x31=(((x1*x2))+(((-1.0)*x28)));
-x32=(x19+x25);
+x14=((1.0)*x7);
+x15=((1.0)*x1);
+x16=((0.1975)*x6);
+x17=((0.324)*x2);
+x18=((1.0)*x6);
+x19=(x0*x7);
+x20=(x1*x3);
+x21=(x0*x2);
+x22=(x3*x4);
+x23=(x2*x6);
+x24=(x2*x4);
+x25=(x10*x5);
+x26=(x0*x14);
+x27=(x15*x2);
+x28=((0.1975)*x1*x2);
+x29=((1.0)*x22);
+x30=(x0*x29);
+x31=((((-1.0)*x27))+x22);
+x32=(x24+x20);
 x33=(x31*x5);
 x34=(x31*x7);
-x35=((((-1.0)*x16*x22))+((x2*x23)));
-x36=(((x19*x6))+((x2*x20)));
-x37=(((x20*x3))+(((-1.0)*x30*x6)));
-x38=((((-1.0)*x2*x22))+(((-1.0)*x16*x23)));
-x39=(x36*x5);
+x35=(((x0*x20))+((x21*x4)));
+x36=((((-1.0)*x30))+((x1*x21)));
+x37=((((-1.0)*x15*x23))+((x22*x6)));
+x38=((((-1.0)*x18*x24))+(((-1.0)*x15*x3*x6)));
+x39=(x35*x5);
 x40=(x38*x5);
-x41=((((-1.0)*x27))+x39);
-x42=(((x0*x5))+((x36*x7)));
-x43=(((x5*x6))+((x38*x7)));
-eerot[0]=((((-1.0)*x8*((((x12*(((((-1.0)*x26))+x40))))+((x13*x35))))))+((x43*x9)));
-eerot[1]=(((x43*x8))+((x9*((((x11*(((((-1.0)*x18))+x40))))+((x10*x35)))))));
-eerot[2]=(((x11*x35))+((x10*(((((-1.0)*x40))+x26)))));
-IkReal x44=((1.0)*x22);
-eetrans[0]=(((x11*(((((0.1975)*x2*x23))+(((-1.0)*x14*x44))))))+((x10*(((((0.1975)*x18))+(((-0.1975)*x40))))))+(((-1.0)*x17*x44))+((x15*x23))+(((-0.266)*x22)));
-eerot[3]=(((x8*(((((-1.0)*x12*x41))+(((-1.0)*x13*x37))))))+((x42*x9)));
-eerot[4]=(((x9*((((x10*x37))+((x11*x41))))))+((x42*x8)));
-eerot[5]=(((x11*x37))+((x10*(((((-1.0)*x39))+x27)))));
-IkReal x45=((1.0)*x6);
-eetrans[1]=(((x10*(((((0.1975)*x21))+(((-0.1975)*x39))))))+(((0.266)*x20))+(((-1.0)*x1*x15*x45))+((x17*x20))+((x11*(((((-1.0)*x29*x45))+((x14*x20)))))));
+x41=((((-1.0)*x14*x6))+x39);
+x42=((((-1.0)*x18*x5))+(((-1.0)*x14*x35)));
+x43=(((x0*x5))+((x38*x7)));
+eerot[0]=(((x42*x9))+((x8*((((x10*x36))+((x11*x41)))))));
+eerot[1]=(((x42*x8))+((x9*(((((-1.0)*x12*x41))+(((-1.0)*x13*x36)))))));
+eerot[2]=(((x10*x41))+((x11*(((((-1.0)*x15*x21))+x30)))));
+IkReal x44=(x0*x22);
+eetrans[0]=((((-1.0)*x0*x1*x17))+((x10*(((((-1.0)*x16*x7))+(((0.1975)*x39))))))+(((0.324)*x44))+((x11*(((((0.1975)*x44))+(((-0.1975)*x1*x21))))))+(((-0.266)*x21)));
+eerot[3]=((((-1.0)*x8*((((x12*(((((-1.0)*x26))+x40))))+((x13*x37))))))+((x43*x9)));
+eerot[4]=(((x9*((((x10*x37))+((x11*(((((-1.0)*x19))+x40))))))))+((x43*x8)));
+eerot[5]=(((x11*x37))+((x10*(((((-1.0)*x40))+x26)))));
+IkReal x45=((1.0)*x1);
+eetrans[1]=((((-1.0)*x17*x45*x6))+((x10*(((((0.1975)*x19))+(((-0.1975)*x40))))))+((x11*(((((-1.0)*x16*x2*x45))+((x16*x22))))))+(((0.324)*x22*x6))+(((-0.266)*x23)));
 eerot[6]=(((x34*x9))+((x8*(((((-1.0)*x12*x33))+(((-1.0)*x13*x32)))))));
 eerot[7]=(((x9*((((x10*x32))+((x11*x33))))))+((x34*x8)));
-eerot[8]=(((x11*x32))+((x24*(((((-1.0)*x30))+x28)))));
-eetrans[2]=((0.1925)+((x1*x17))+((x24*(((((-1.0)*x29))+((x14*x4))))))+(((0.266)*x1))+((x11*((((x1*x14))+(((0.1975)*x25))))))+((x15*x4)));
+eerot[8]=(((x11*x32))+((x25*(((((-1.0)*x29))+x27)))));
+eetrans[2]=((0.1925)+((x11*(((((0.1975)*x24))+(((0.1975)*x20))))))+((x25*(((((-0.1975)*x22))+x28))))+((x17*x4))+(((0.266)*x3))+(((0.324)*x20)));
 }
 
 IKFAST_API int GetNumFreeParameters() { return 0; }
@@ -388,14 +388,14 @@ r21 = eerot[2*3+1];
 r22 = eerot[2*3+2];
 px = eetrans[0]; py = eetrans[1]; pz = eetrans[2];
 
-new_r00=r01;
-new_r01=((-1.0)*r00);
-new_r02=r02;
-new_px=((((-0.1975)*r02))+px);
-new_r10=r11;
-new_r11=((-1.0)*r10);
-new_r12=r12;
-new_py=((((-0.1975)*r12))+py);
+new_r00=r11;
+new_r01=((-1.0)*r10);
+new_r02=r12;
+new_px=((((-0.1975)*r12))+py);
+new_r10=((-1.0)*r01);
+new_r11=r00;
+new_r12=((-1.0)*r02);
+new_py=((((0.1975)*r02))+(((-1.0)*px)));
 new_r20=r21;
 new_r21=((-1.0)*r20);
 new_r22=r22;
@@ -431,7 +431,7 @@ if( cj2array[0] >= -1-IKFAST_SINCOS_THRESH && cj2array[0] <= 1+IKFAST_SINCOS_THR
     j2array[1] = -j2array[0];
     sj2array[1] = -sj2array[0];
 }
-else if( std::isnan(cj2array[0]) )
+else if( isnan(cj2array[0]) )
 {
     // probably any value will work
     j2valid[0] = true;
@@ -2883,7 +2883,7 @@ if( cj4array[0] >= -1-IKFAST_SINCOS_THRESH && cj4array[0] <= 1+IKFAST_SINCOS_THR
     j4array[1] = -j4array[0];
     sj4array[1] = -sj4array[0];
 }
-else if( std::isnan(cj4array[0]) )
+else if( isnan(cj4array[0]) )
 {
     // probably any value will work
     j4valid[0] = true;
@@ -9662,7 +9662,7 @@ if( cj3array[0] >= -1-IKFAST_SINCOS_THRESH && cj3array[0] <= 1+IKFAST_SINCOS_THR
     j3array[1] = -j3array[0];
     sj3array[1] = -sj3array[0];
 }
-else if( std::isnan(cj3array[0]) )
+else if( isnan(cj3array[0]) )
 {
     // probably any value will work
     j3valid[0] = true;
@@ -9758,7 +9758,7 @@ if( cj3array[0] >= -1-IKFAST_SINCOS_THRESH && cj3array[0] <= 1+IKFAST_SINCOS_THR
     j3array[1] = -j3array[0];
     sj3array[1] = -sj3array[0];
 }
-else if( std::isnan(cj3array[0]) )
+else if( isnan(cj3array[0]) )
 {
     // probably any value will work
     j3valid[0] = true;
@@ -10264,7 +10264,7 @@ if( cj3array[0] >= -1-IKFAST_SINCOS_THRESH && cj3array[0] <= 1+IKFAST_SINCOS_THR
     j3array[1] = -j3array[0];
     sj3array[1] = -sj3array[0];
 }
-else if( std::isnan(cj3array[0]) )
+else if( isnan(cj3array[0]) )
 {
     // probably any value will work
     j3valid[0] = true;
@@ -11744,7 +11744,7 @@ if( cj3array[0] >= -1-IKFAST_SINCOS_THRESH && cj3array[0] <= 1+IKFAST_SINCOS_THR
     j3array[1] = -j3array[0];
     sj3array[1] = -sj3array[0];
 }
-else if( std::isnan(cj3array[0]) )
+else if( isnan(cj3array[0]) )
 {
     // probably any value will work
     j3valid[0] = true;
@@ -11840,7 +11840,7 @@ if( cj3array[0] >= -1-IKFAST_SINCOS_THRESH && cj3array[0] <= 1+IKFAST_SINCOS_THR
     j3array[1] = -j3array[0];
     sj3array[1] = -sj3array[0];
 }
-else if( std::isnan(cj3array[0]) )
+else if( isnan(cj3array[0]) )
 {
     // probably any value will work
     j3valid[0] = true;
@@ -12347,7 +12347,7 @@ if( cj3array[0] >= -1-IKFAST_SINCOS_THRESH && cj3array[0] <= 1+IKFAST_SINCOS_THR
     j3array[1] = -j3array[0];
     sj3array[1] = -sj3array[0];
 }
-else if( std::isnan(cj3array[0]) )
+else if( isnan(cj3array[0]) )
 {
     // probably any value will work
     j3valid[0] = true;
@@ -14851,7 +14851,7 @@ IKSolver solver;
 return solver.ComputeIk(eetrans,eerot,pfree,solutions);
 }
 
-IKFAST_API const char* GetKinematicsHash() { return "<robot:GenericRobot - elfin3 (67e8a0526f992ee55ae16bfedbf9d2d7)>"; }
+IKFAST_API const char* GetKinematicsHash() { return "de8d2587f05130d531ad273f86ac8aa2"; }
 
 IKFAST_API const char* GetIkFastVersion() { return "0x10000049"; }
 
